@@ -190,7 +190,7 @@ maybe_install_uv() {
 
 main() {
   parse_args "$@"
-  ensure_curl()
+  ensure_curl
   ensure_install_dir
   tmp=$(download_binary)
   install_binary "$tmp"
