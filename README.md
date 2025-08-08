@@ -5,13 +5,25 @@ Unix-style tool to fetch Slack thread conversations for piping to other tools.
 ## Installation
 
 ```bash
-# Download and install
-curl -L https://raw.githubusercontent.com/jongwony/slack_thread/main/slack-thread -o /usr/local/bin/slack-thread
-chmod +x /usr/local/bin/slack-thread
+# One-liner (recommended)
+curl -fsSL https://raw.githubusercontent.com/jongwony/slack-thread/main/install | bash
 
 # Or clone and symlink
-git clone https://github.com/jongwony/slack_thread
-ln -s $(pwd)/slack_thread/slack-thread /usr/local/bin/slack-thread
+git clone https://github.com/jongwony/slack-thread
+ln -s $(pwd)/slack-thread/slack-thread /usr/local/bin/slack-thread
+```
+
+Advanced install options:
+
+```bash
+# Choose install directory
+curl -fsSL https://raw.githubusercontent.com/jongwony/slack-thread/main/install | bash -s -- --to "$HOME/.local/bin"
+
+# Force overwrite existing binary
+curl -fsSL https://raw.githubusercontent.com/jongwony/slack-thread/main/install | bash -s -- --force
+
+# Also install 'uv' automatically if missing
+curl -fsSL https://raw.githubusercontent.com/jongwony/slack-thread/main/install | bash -s -- --install-uv
 ```
 
 ## Setup
@@ -48,25 +60,13 @@ export SLACK_BOT_TOKEN='xoxb-your-bot-token'
 slack-thread https://workspace.slack.com/archives/C123/p456789
 
 # With pipes
-slack-thread <url> | claude "Summarize this"
 slack-thread <url> | pbcopy
 slack-thread <url> > thread.txt
 
-# Verbose mode
-slack-thread -v <url>
-```
-
-## Examples
-
-```bash
 # Summarize with AI
+slack-thread <url> | claude "Summarize this"
 slack-thread <url> | claude "Extract action items"
-
-# Search in thread
-slack-thread <url> | grep -i "deadline"
-
-# Count messages
-slack-thread <url> | wc -l
+slack-thread <url> | claude "Create Linear issues"
 ```
 
 ## License
